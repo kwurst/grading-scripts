@@ -1,7 +1,10 @@
 Scripts for grading student programs.
 
-The student programs are retrieved from a remote git repository.
-These scripts produce PDFs for grading.
+The student programs are pulled from remote git repositories. 
+These scripts produce PDFs for grading, and return them to student repos after grading. 
+Graded files are pushed back to remotes.
+
+Planned Workflow:
 
 A. Pull all from remote repositories
 
