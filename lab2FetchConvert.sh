@@ -38,7 +38,7 @@ git fetch ${1%%-*} # fetch the student work
 git checkout -b $1 ${1%%-*}/master # make a student branch
 
 # Convert file(s) to PDF(s) and place in grading directory
-~/Dropbox/a2pdf-1.13-OSX-Intel/a2pdf --noperl-syntax Lab2Code/Lab2.java > ../grading/Lab2/$1.java.pdf # convert the Java file to PDF
+~/Dropbox/a2pdf-1.13-OSX-Intel/a2pdf --noperl-syntax Lab2Code/Lab2.java > ../grading/Lab2/$1.pdf # convert the Java file to PDF
 
 git checkout master # return to master branch
 
