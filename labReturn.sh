@@ -17,6 +17,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 
 # This script returns a graded student assignment to their repository.
+# It also copies the solution to their repository.
 # It will leave the graded assignment in a new branch.
 # The student will have to merge the changes into their master branch
 # (or you have to issue a pull request, and maybe merge it depending on
@@ -35,9 +36,12 @@ cd $2 # folder for local repository
 git checkout $1 # checkout the student branch
 
 cp ../grading/$2/$1.pdf ./ # copy the graded assignment to student repository
+cp -r ../../../Labs/$2/$2'Solution' ./$2'Solution' # copy the solution to student repository
 
 git add $1.pdf # add the graded assignment
-git commit -m"Returned $2" # commit the graded assignment
+git add $2'Solution' # add the solution
+
+git commit -m"Returned graded $2 (and solution)" # commit the graded assignment
 git push ${1%%-*} $1 # push the changes to student repository
 
 git checkout master # return to the master branch
