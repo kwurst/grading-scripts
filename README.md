@@ -18,5 +18,6 @@ C. Grade PDFs on iPad
 D. For each student:
     1. Switch to student'sbranch
     2. Copy PDF to correct folder (assignment/file.pdf)
+    3. Copy assignment solution to correct folder
 
 E. Push all to remote repositories
