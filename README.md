@@ -6,18 +6,20 @@ Graded files are pushed back to remotes.
 
 Planned Workflow:
 
-A. Pull all from remote repositories
+1. Pull all from remote repositories
 
-B. For each student:
-    1. Switch to student's branch
-    2. Convert program files to a single PDF (convert and append)
-    3. Put PDF in grading folder (grading/student/assignment/file.pdf)
+2. For each student:
 
-C. Grade PDFs on iPad
+	1. Switch to student's branch
+	2.  Convert program files to a single PDF (convert and append)
+	3. Put PDF in grading folder (grading/student/assignment/file.pdf)
 
-D. For each student:
-    1. Switch to student'sbranch
-    2. Copy PDF to correct folder (assignment/file.pdf)
-    3. Copy assignment solution to correct folder
+3. Grade PDFs on iPad
 
-E. Push all to remote repositories
+4. For each student:
+
+	1. Switch to student'sbranch
+	2. Copy PDF to correct folder (assignment/file.pdf)
+	3. Copy assignment solution to correct folder
+
+5. Push all to remote repositories
