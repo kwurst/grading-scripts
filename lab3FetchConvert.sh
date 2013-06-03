@@ -38,8 +38,8 @@ git fetch ${1%%-*} # fetch the student work
 git checkout -b $1 ${1%%-*}/master # make a student branch
 
 # Convert file(s) to PDF(s) and place in grading directory
-~/Dropbox/a2pdf-1.13-OSX-Intel/a2pdf --noperl-syntax Lab3Code/Lab3.java > ../grading/Lab3/$1Lab3.pdf
-~/Dropbox/a2pdf-1.13-OSX-Intel/a2pdf --noperl-syntax Lab3Code/Person.java > ../grading/Lab3/$1Person.pdf
+a2pdf --noperl-syntax Lab3Code/Lab3.java > ../grading/Lab3/$1Lab3.pdf
+a2pdf --noperl-syntax Lab3Code/Person.java > ../grading/Lab3/$1Person.pdf
 pdftk ../grading/Lab3/$1Lab3.pdf ../grading/Lab3/$1Person.pdf cat output ../grading/Lab3/$1.pdf
 rm ../grading/Lab3/$1Lab3.pdf
 rm ../grading/Lab3/$1Person.pdf
