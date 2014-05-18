@@ -1,25 +1,19 @@
-Scripts for grading student programs.
+Scripts for preparing student programs for grading.
 
-The student programs are pulled from remote git repositories. 
-These scripts produce PDFs for grading, and return them to student repos after grading. 
-Graded files are pushed back to remotes.
+Will consist of:
+1. Script for cloning student remote git repositories.
+2. Scripts for converting student repository code into a PDF file for
+   grading.
+3. Script for pulling changes from remote repositories.
+4. Script for pushing changes to remote repositories
 
-Planned Workflow:
 
-1. Pull all from remote repositories
+Scripts for converting student repository code in to a PDF file for
+grading.
 
-2. For each student:
+The following scripts are working:
+* process-all-subdirectories.py
+* project1Convert.py
 
-	1. Switch to student's branch
-	2.  Convert program files to a single PDF (convert and append)
-	3. Put PDF in grading folder (grading/student/assignment/file.pdf)
-
-3. Grade PDFs on iPad
-
-4. For each student:
-
-	1. Switch to student'sbranch
-	2. Copy PDF to correct folder (assignment/file.pdf)
-	3. Copy assignment solution to correct folder
-
-5. Push all to remote repositories
+all *Convert.py scripts work as well, but will be rewritten to work
+with process-all-subdirectories.py
