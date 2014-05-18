@@ -25,6 +25,7 @@
 
 import argparse
 import os
+import importlib
 
 # Set up to parse arguments
 parser = argparse.ArgumentParser()
@@ -33,7 +34,8 @@ parser.add_argument('script', help='Processing script')
 parser.add_argument('-v', '--verbose', help='increase output verbosity', action='store_true')
 args = parser.parse_args()
 
-mod = __import__(args.script)
+# Import the script that the user specified and call it mod
+mod = importlib.import_module(args.script)
 
 # Change to assignment directory
 os.chdir(args.directory) # directory for assignment
@@ -44,7 +46,8 @@ onlydirectories = [ f for f in os.listdir() if not os.path.isfile(os.path.join(o
 # For each directory
 for dir in onlydirectories:
     os.chdir(dir)
-    
+
+    # process that directry
     mod.process(dir)
     
     os.chdir('..')
