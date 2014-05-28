@@ -26,71 +26,43 @@
 import argparse
 import os
 import importlib
-
-# Set up to parse arguments
-parser = argparse.ArgumentParser()
-parser.add_argument('directory', help='Directory to process all subdirectories')
-parser.add_argument('script', help='Processing script')
-parser.add_argument('-v', '--verbose', help='increase output verbosity', action='store_true')
-args = parser.parse_args()
-
-# Import the script that the user specified and call it mod
-mod = importlib.import_module(args.script)
-
-# Change to assignment directory
-os.chdir(args.directory) # directory for assignment
-
-# Get list of all directories
-onlydirectories = [ f for f in os.listdir() if not os.path.isfile(os.path.join(os.curdir,f)) ]
-
-# For each directory
-for dir in onlydirectories:
-    os.chdir(dir)
-
-    # process that directry
-    mod.process(dir)
-    
-    os.chdir('..')
+import json
 
 
+def main():
+    args = parse_command_line_arguments()
+    config = load_json_configuration(args.config)
+    script = import_(args.script)
+    directories = get_student_directories(config['directory'])
+    run_script_on_directories_with_config(script, directories, config)
 
 
+def parse_command_line_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('config', help='Path to JSON configuration file')
+    parser.add_argument('script', help='Processing script')
+    return parser.parse_args()
 
 
+def load_json_configuration(filename):
+    config_string = ''
+    with open(filename) as config_file:
+        config_string = config_file.read()
+    return json.loads(config_string)
 
 
+def import_(scriptname):
+    return importlib.import_module(scriptname)
 
 
+def get_student_directories(root_directory):
+    return [ f for f in os.listdir(root_directory) if not os.path.isfile(os.path.join(root_directory, f)) ]
 
 
+def run_script_on_directories_with_config(script, directories, config):
+    for directory in directories:
+        script.process(directory, config)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    main()
