@@ -52,6 +52,7 @@ def load_json_configuration(filename):
 
 
 def import_(scriptname):
+    print(scriptname)
     return importlib.import_module(scriptname)
 
 

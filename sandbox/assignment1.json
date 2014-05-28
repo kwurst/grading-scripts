@@ -1,0 +1,7 @@
+{
+    "directory" : "assignment1",
+    "files" : [
+        "file1.txt",
+        "subdir/file2.txt"
+    ]
+}
