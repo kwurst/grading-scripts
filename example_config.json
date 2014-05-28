@@ -1,0 +1,8 @@
+{
+    "directory" : "where/I/grade/stuff",
+    "files" : [
+        "Lab11Code/Part1/Brass.java",
+        "Lab11Code/Part1/Instrument.java",
+        "Lab11Code/Part2/ActionCharacter.java"
+    ]
+}
