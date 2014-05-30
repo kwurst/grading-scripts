@@ -20,7 +20,7 @@ class Command(object):
         concat(['f1', 'f2'], 'f3')  # lists, concats f1 and f2 into f3
         concat(pathlib.Path('f1'), 'f2')  # you may pass Paths.
         concat(o1, o2)  # o1 and o2 will be converted to a string via str().
-        concat('*.txt', 'out.txt')  # globing
+        concat(Path('.').glob('*.txt'), 'out.txt')  # globbing
         concat(outs='f3', ins=['f1', 'f2'])  # named parameters
         concat2('f1')  # copies f1 to f1.2 ; optional parameters
         concat2.each(['f1', 'f2])  # copies f1 to f1.2 and f2 to f2.2

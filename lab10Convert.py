@@ -1,6 +1,13 @@
 import argparse
 import os
 import assignment
+from command import Command
+
+
+a2pdf = Command('a2pdf --noperl-syntax --noline-numbers "{ins}" -o "{ins}.pdf"')
+pdfcat = Command('pdftk "{ins}" cat output "{outs}"')
+create_log = Command('git log > log.txt')
+rm = Command('rm "{ins}"')
 
 
 def main():
@@ -11,21 +18,12 @@ def main():
 
 
 def go(directory, files):
-    for file_ in files:
-        a2pdf(file_)
-    os.system('git log > log.txt')
-    a2pdf('log.txt')
-    outpdf = str(directory.name) + '.pdf'
-    os.system('pdftk *.pdf cat output ' + outpdf)
-    for file_ in directory.glob('*.pdf'):
-        if str(file_) != outpdf:
-            os.remove(file_)
-    os.remove('log.txt')
-
-
-def a2pdf(file_):
-    os.system('a2pdf --noperl-syntax --noline-numbers "%s" -o "%s"' %
-            (str(file_.name), str(file_.name) + '.pdf'))
+    create_log()
+    a2pdf.each(files + ['log.txt'])
+    outpdf = directory.name + '.pdf'
+    pdfcat(directory.glob('*.pdf'), outpdf)
+    rm([f for f in directory.glob('*.pdf') if str(f) != outpdf])
+    rm('log.txt')
 
 
 if __name__ == '__main__':
