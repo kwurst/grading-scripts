@@ -7,12 +7,14 @@ from pathlib import Path
 class test_Command(unittest.TestCase):
 
     def setUp(self):
+        Command.set_default_verbosity(False)
         self.directory = Path(sandbox.dir('test_Command'))
         self.directory.mkdir()
         self.file_ = self.directory / 'test_simple'
         self.filename = str(self.file_)
 
     def tearDown(self):
+        Command.set_default_verbosity(False)
         for f in self.directory.glob('*'):
             f.unlink()
         self.directory.rmdir()
@@ -71,6 +73,24 @@ class test_Command(unittest.TestCase):
         write_hi = Command('echo hi > "{outs}"')
         write_hi(outs=self.file_)
         self.assertTrue(self.file_.exists())
+
+    def test_default_verbosity_is_false(self):
+        ls = Command('ls')
+        self.assertFalse(ls._verbose)
+
+    def test_verbosity_true(self):
+        ls = Command('ls', verbose=True)
+        self.assertTrue(ls._verbose)
+
+    def test_set_default_verbosity_true(self):
+        Command.set_default_verbosity(True)
+        ls = Command('ls')
+        self.assertTrue(ls._verbose)
+
+    def test_override_default_verbosity_false(self):
+        Command.set_default_verbosity(True)
+        ls = Command('ls', False)
+        self.assertFalse(ls._verbose)
 
 
 if __name__ == '__main__':
