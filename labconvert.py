@@ -19,11 +19,16 @@ def main():
 
 def go(directory, files):
     create_log()
+    print('done creating log')
     a2pdf.each(files + ['log.txt'])
+    print('done pdfing')
     outpdf = directory.name + '.pdf'
-    pdfcat(directory.glob('*.pdf'), outpdf)
-    rm([f for f in directory.glob('*.pdf') if str(f) != outpdf])
-    rm('log.txt')
+    print('generated file name')
+    pdfs = [str(f) + '.pdf' for f in files] + [directory/'log.txt.pdf']
+    pdfcat(pdfs, outpdf)
+    print('done concatentating')
+    rm(pdfs)
+    rm(directory/'log.txt')
 
 
 if __name__ == '__main__':

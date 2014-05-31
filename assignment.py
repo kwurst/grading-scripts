@@ -68,7 +68,7 @@ class Assignment(object):
                 os.chdir(str(directory))
             visit(directory, self._get_resolved_files(directory))
             if cd:
-                os.chdir(cwd)
+                os.chdir(str(cwd))
 
     def _get_resolved_files(self, root):
         return [self._resolve(f, root=root) for f in self._config['files']]
