@@ -45,3 +45,7 @@ gitlabtoken.txt
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# Python gnerated files #
+#########################
+__pycache__
