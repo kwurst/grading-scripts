@@ -45,23 +45,31 @@ PIPE = subprocess.PIPE
 # Change to assignment directory
 os.chdir(args.directory) # directory for assignment
 
-# Get list of all directories
-onlydirectories = [ f for f in os.listdir() if not os.path.isfile(os.path.join(os.curdir,f)) ]
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/Shape.java -o Shape.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/ThreeDimensionalShape.java -o ThreeDimensionalShape.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/TwoDimensionalShape.java -o TwoDImensionalShape.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/Cone.java -o Cone.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/Sphere.java -o Sphere.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/Cube.java -o Cube.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/Cylinder.java -o Cylinder.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/Triangle.java -o Triangle.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/Rectangle.java -o Rectangle.java.pdf')
+os.system('a2pdf --noperl-syntax --noline-numbers Project4Code/Circle.java -o Circle.java.pdf')
 
-# For each directory
-for dir in onlydirectories:
-    print(dir)
-    os.chdir(dir)
-    os.system('a2pdf --noperl-syntax --noline-numbers Lab10Code/Student.java -o Student.java.pdf')
-    os.system('a2pdf --noperl-syntax --noline-numbers Lab10Code/Lab10.java -o Lab10.java.pdf')
-    os.system('git log > log.txt')
-    os.system('a2pdf --noperl-syntax --noline-numbers log.txt -o log.txt.pdf')
-    os.system('pdftk Lab10.java.pdf Student.java.pdf log.txt.pdf cat output ' + dir + '.pdf')
-    os.remove('Student.java.pdf')
-    os.remove('Lab10.java.pdf')
-    os.remove('log.txt.pdf')
-    os.remove('log.txt')
-    os.chdir('..')
+os.system('git log | a2pdf --noperl-syntax --noline-numbers --title "git log" -o log.pdf')
+os.system('pdftk Shape.java.pdf ThreeDimensionalShape.java.pdf Cone.java.pdf Sphere.java.pdf Cube.java.pdf Cylinder.java.pdf TwoDimensionalShape.java.pdf Triangle.java.pdf Rectangle.java.pdf Circle.java.pdf log.pdf cat output cyates2.pdf')
+os.remove('Shape.java.pdf')
+os.remove('ThreeDimensionalShape.java.pdf')
+os.remove('TwoDimensionalShape.java.pdf')
+os.remove('Cone.java.pdf')
+os.remove('Sphere.java.pdf')
+os.remove('Cube.java.pdf')
+os.remove('Cylinder.java.pdf')
+os.remove('Triangle.java.pdf')
+os.remove('Rectangle.java.pdf')
+os.remove('Circle.java.pdf')
+
+os.remove('log.pdf')
 
 
 
