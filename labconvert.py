@@ -11,11 +11,12 @@ class LabConvert(object):
         parser.add_argument('config', help='JSON configuration file')
         parser.add_argument('-v', '--verbose', help='increase output verbosity', action='store_true')
         args = parser.parse_args()
-        self._a2pdf = Command('a2pdf --noperl-syntax --noline-numbers "{ins}" -o "{ins}.pdf"', args.verbose)
-        self._pdfcat = Command('pdftk "{ins}" cat output "{outs}"', args.verbose)
-        self._create_log = Command('git log > log.txt', args.verbose)
-        self._rm = Command('rm "{ins}"', args.verbose)
-        Assignment(args.config, args.verbose).accept(self.go, cd=True)
+        Command.set_default_verbosity(args.verbose)
+        self._a2pdf = Command('a2pdf --noperl-syntax --noline-numbers "{ins}" -o "{ins}.pdf"')
+        self._pdfcat = Command('pdftk "{ins}" cat output "{outs}"')
+        self._create_log = Command('git log > log.txt')
+        self._rm = Command('rm "{ins}"')
+        Assignment(args.config).accept(self.go, cd=True)
 
 
     def go(self, directory, files):
