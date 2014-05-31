@@ -26,7 +26,8 @@ class Command(object):
         concat2.each(['f1', 'f2])  # copies f1 to f1.2 and f2 to f2.2
         concat.each(['f1', 'f2'], ['f3', 'f4'])  # copies f1 to f3 and f2 to f4
     '''
-    def __init__(self, command_string):
+    def __init__(self, command_string, verbose=False):
+        self._verbose = verbose
         self._command_string = command_string
 
     def __call__(self, ins=None, outs=None):
@@ -40,6 +41,8 @@ class Command(object):
             command = self._command_string.format(ins=ins)
         else:
             command = self._command_string.format(ins=ins, outs=outs)
+        if self._verbose:
+            print(command)
         os.system(command)
 
     def each(self, ins=None, outs=None):

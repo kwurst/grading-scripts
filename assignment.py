@@ -3,19 +3,13 @@ import json
 import os
 
 
-def new(config_file):
-    '''Returns a new Assignment object.
-    config_file: string - path to an assignment configuration file in JSON.
-    '''
-    return Assignment(config_file)
-
-
 class Assignment(object):
     '''Provides traversal and path resolution for visitors over an assignment
     directory.
     '''
 
-    def __init__(self, config_file):
+    def __init__(self, config_file, verbose=False):
+        self._verbose = verbose
         self._config_file = pathlib.Path(config_file).resolve()
         self._config = None
         self._submission_directories = []
@@ -63,11 +57,17 @@ class Assignment(object):
         cd: boolean - True causes accept to change into each submission directory.
         '''
         for directory in self._submission_directories:
+            if self._verbose:
+                print('Processing', directory)
             if cd:
+                if self._verbose:
+                    print('Entering')
                 cwd = pathlib.Path.cwd()
                 os.chdir(str(directory))
             visit(directory, self._get_resolved_files(directory))
             if cd:
+                if self._verbose:
+                    print('Exiting')
                 os.chdir(cwd)
 
     def _get_resolved_files(self, root):
