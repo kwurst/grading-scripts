@@ -33,35 +33,14 @@ class Command(object):
         cls._default_verbosity = flag
 
     def __init__(self, command_string, verbose=None):
-        if verbose is None:
-            self._verbose = Command._default_verbosity
-        else:
-            self._verbose = verbose
+        self._verbose = verbose if verbose is not None else Command._default_verbosity
         self._command_string = command_string
 
     def __call__(self, ins=None, outs=None):
         ins = self._format_args(ins)
         outs = self._format_args(outs)
-        if ins is None and outs is None:
-            command = self._command_string
-        elif ins is None:
-            command = self._command_string.format(outs=outs)
-        elif outs is None:
-            command = self._command_string.format(ins=ins)
-        else:
-            command = self._command_string.format(ins=ins, outs=outs)
-        if self._verbose:
-            print(command)
-        os.system(command)
-
-    def each(self, ins=None, outs=None):
-        for i in range(len(ins)):
-            ins_i = ins[i]
-            if isinstance(outs, list):
-                outs_i = outs[i]
-            else:
-                outs_i = outs
-            self(ins_i, outs_i)
+        command = self._command_string.format(ins=ins, outs=outs)
+        self._run_command(command)
 
     def _format_args(self, args):
         if args is None:
@@ -71,3 +50,14 @@ class Command(object):
         elif not isinstance(args, str):
             return str(args)
         return args
+
+    def _run_command(self, command):
+        if self._verbose:
+            print(command)
+        os.system(command)
+
+    def each(self, ins=None, outs=None):
+        for i in range(len(ins)):
+            ins_i = ins[i]
+            outs_i = outs[i] if isinstance(outs, list) else outs
+            self(ins_i, outs_i)
