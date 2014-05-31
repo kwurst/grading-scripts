@@ -1,6 +1,6 @@
 import argparse
 import os
-import assignment
+from assignment import Assignment
 from command import Command
 
 
@@ -9,6 +9,7 @@ pdfcat = Command('pdftk "{ins}" cat output "{outs}"')
 create_log = Command('git log > log.txt')
 rm = Command('rm "{ins}"')
 
+        Assignment(args.config, args.verbose).accept(self.go, cd=True)
 
 def main():
     parser = argparse.ArgumentParser()

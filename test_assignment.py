@@ -1,16 +1,16 @@
 import unittest
 import sandbox
 import os.path
-import assignment
+from assignment import Assignment
 
 
-class test_Assignmnet(unittest.TestCase):
+class test_Assignment(unittest.TestCase):
 
     def setUp(self):
         self.collector = Collector()
 
     def test_each(self):
-        the_assignment = assignment.new(sandbox.dir('assignment1.json'))
+        the_assignment = Assignment(sandbox.dir('assignment1.json'))
         the_assignment.accept(self.collector.visit)
         self.assertPathsExist()
 
