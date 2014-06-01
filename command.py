@@ -48,7 +48,8 @@ class Command(object):
         cls._default_verbosity = flag
 
     def __init__(self, command_string, verbose=None):
-        self._verbose = verbose if verbose is not None else Command._default_verbosity
+        self._verbose = \
+            verbose if verbose is not None else Command._default_verbosity
         self._command_string = command_string
 
     def __call__(self, ins=None, outs=None):

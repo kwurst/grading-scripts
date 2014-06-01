@@ -30,10 +30,12 @@ class test_Assignment(unittest.TestCase):
         self.assertPathsExist()
 
     def assertPathsExist(self):
-        self.assertTrue(self.collector.directories, msg="No directories collected.")
+        self.assertTrue(
+            self.collector.directories, msg="No directories collected.")
         self.assertTrue(self.collector.files, msg="No files collected.")
         for d in self.collector.directories:
-            self.assertTrue(d.exists(), msg="Directory does not exist: " + str(d))
+            self.assertTrue(
+                d.exists(), msg="Directory does not exist: " + str(d))
             self.assertTrue(d.is_dir(), msg="Not a directory: " + str(d))
         for f in self.collector.files:
             self.assertTrue(f.exists(), msg="File does not exist: " + str(f))
