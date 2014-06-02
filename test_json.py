@@ -22,6 +22,7 @@ import sandbox
 
 CONFIG_FILENAME = sandbox.dir('assignment1.json')
 
+
 class test_Json(unittest.TestCase):
     def test_canLoadJsonFile(self):
         config_string = ''

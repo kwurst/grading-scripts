@@ -24,17 +24,21 @@ class LabConvert(object):
     def __init__(self):
         parser = argparse.ArgumentParser()
         parser.add_argument('config', help='JSON configuration file')
-        parser.add_argument('-v', '--verbose', help='increase output verbosity', action='store_true')
+        parser.add_argument(
+            '-v', '--verbose',
+            help='increase output verbosity',
+            action='store_true'
+            )
         args = parser.parse_args()
         Command.set_default_verbosity(args.verbose)
-        self._a2pdf = Command('a2pdf --noperl-syntax --noline-numbers "{ins}" -o "{ins}.pdf"')
+        self._a2pdf = Command(
+            'a2pdf --noperl-syntax --noline-numbers "{ins}" -o "{ins}.pdf"')
         self._pdfcat = Command('pdftk "{ins}" cat output "{outs}"')
         self._create_log = Command('git log > log.txt')
         self._rm = Command('rm "{ins}"')
-        Assignment(args.config).accept(self.go, cd=True)
+        Assignment(args.config).accept(self.process_submission)
 
-
-    def go(self, directory, files):
+    def process_submission(self, directory, files):
         self._create_log()
         self._a2pdf.each(files + ['log.txt'])
         outpdf = directory.name + '.pdf'
