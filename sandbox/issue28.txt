@@ -1,0 +1,2 @@
+/Users/Stoney/Devel/git/grading-scripts/sandbox/issue28/student1/file1.txt
+/Users/Stoney/Devel/git/grading-scripts/sandbox/issue28/student1/subdir/file2.txt
