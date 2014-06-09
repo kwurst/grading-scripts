@@ -1,0 +1,7 @@
+{
+    "directory" : "issue28",
+    "files" : [
+        "file1.txt",
+        "subdir/file2.txt"
+    ]
+}
