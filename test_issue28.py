@@ -1,6 +1,7 @@
 import unittest
 import sandbox
 import os.path
+import os
 from assignment import Assignment
 from command import Command
 
@@ -9,6 +10,10 @@ OUTFILE = sandbox.dir('issue28.txt')
 
 
 class test_issue28(unittest.TestCase):
+
+    def tearDown(self):
+        if os.path.isfile(OUTFILE):
+            os.remove(OUTFILE)
 
     def test_missingFile_keepGoing(self):
         collector = Collector()
