@@ -107,6 +107,16 @@ class Assignment(object):
             os.chdir(str(self._original_directory))
 
     def _get_resolved_files(self, root):
-        return [self._resolve_path(f, root=root)
-                for f in self._config_dict['files']
-                ]
+        resolved_or_none = [
+                self._resolve_path_or_none(f, root=root)
+                for f in self._config_dict['files']]
+        resolved = [f for f in resolved_or_none if f is not None]
+        return resolved
+    
+    def _resolve_path_or_none(self, path, root=None):
+        resolved = None
+        try:
+            resolved = self._resolve_path(path, root=root)
+        except FileNotFoundError:
+            print('Not found: ' + str(root/path))
+        return resolved
