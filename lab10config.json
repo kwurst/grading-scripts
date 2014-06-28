@@ -1,7 +1,10 @@
 {
-	"directory" : "/Users/karl/Desktop/Lab10",
+	"directory" : "/Users/karl/GoogleDrive/Courses/CS-140/StudentSubmissions/S1-2014/grading/Lab10",
 	"files" : [
+		"Lab10Code/Person.java",
 		"Lab10Code/Student.java",
-		"Lab10Code/Lab10.java"
+		"Lab10Code/Employee.java",
+		"Lab10Code/Faculty.java",
+		"Lab10Code/Staff.java"
 	]
 }
