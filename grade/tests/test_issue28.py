@@ -1,11 +1,11 @@
 import unittest
-import sandbox
 import os.path
 import os
 from io import StringIO
 import sys
-from assignment import Assignment
-from command import Command
+import grade.tests.sandbox as sandbox
+from grade.assignment import Assignment
+from grade.command import Command
 
 
 OUTFILE = sandbox.dir('issue28.txt')

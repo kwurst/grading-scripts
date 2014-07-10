@@ -14,9 +14,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 import unittest
-import sandbox
 import os.path
-from assignment import Assignment
+import grade.tests.sandbox as sandbox
+from grade.assignment import Assignment
 
 
 class test_Assignment(unittest.TestCase):

@@ -13,10 +13,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
+
 import argparse
 import os
-from assignment import Assignment
-from command import Command
+from grade.assignment import Assignment
+from grade.command import Command
 
 
 class LabConvert(object):

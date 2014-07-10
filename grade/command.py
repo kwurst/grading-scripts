@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 import argparse
 import os
-import assignment
+import grade.assignment as assignment
 
 
 class Command(object):
