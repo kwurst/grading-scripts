@@ -17,7 +17,7 @@ import unittest
 import json
 import os.path
 import os
-import grade.tests.sandbox as sandbox
+import tests.sandbox as sandbox
 
 
 CONFIG_FILENAME = sandbox.dir('assignment1.json')

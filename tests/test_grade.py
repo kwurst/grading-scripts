@@ -15,8 +15,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 import unittest
 import os.path
-import grade.tests.sandbox as sandbox
-from grade.engine import Assignment, Command
+import tests.sandbox as sandbox
+from grade import Assignment, Command
 from pathlib import Path
 
 

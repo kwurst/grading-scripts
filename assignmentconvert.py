@@ -13,43 +13,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
-
-import argparse
-import logging
-import os
-from grade.engine import Assignment, Command
+from grade import App
 
 
-class LabConvert(object):
-
+class LabConvert(App):
     def __init__(self):
-        parser = argparse.ArgumentParser()
-        parser.add_argument('config', help='JSON configuration file')
-        parser.add_argument(
-            '-v', '--verbose',
-            help='increase output verbosity',
-            action='store_true',
-            default=False
-            )
-        parser.add_argument(
-            '-b', '--brief',
-            help='decrease output verbosity',
-            action='store_true',
-            default=False
-            )
-        args = parser.parse_args()
-        if args.verbose:
-            logging.basicConfig(level='DEBUG')
-        elif args.brief:
-            logging.basicConfig(level='WARNING')
-        else:
-            logging.basicConfig(level='INFO')
-        self._a2pdf = Command(
+        super().__init__(self)
+        self._a2pdf = self.command(
             'a2pdf --noperl-syntax --noline-numbers "{ins}" -o "{ins}.pdf"')
-        self._pdfcat = Command('pdftk "{ins}" cat output "{outs}"')
-        self._create_log = Command('git log > log.txt')
-        self._rm = Command('rm "{ins}"')
-        Assignment(args.config).accept(self.process_submission)
+        self._pdfcat = self.command('pdftk "{ins}" cat output "{outs}"')
+        self._create_log = self.command('git log > log.txt')
+        self._rm = self.command('rm "{ins}"')
 
     def process_submission(self, directory, files):
         self._create_log()
@@ -62,4 +36,4 @@ class LabConvert(object):
 
 
 if __name__ == '__main__':
-    LabConvert()
+    LabConvert().run()

@@ -56,3 +56,7 @@ We process the assignment as follows:
 
     $ cd grading-scripts
     $ python run_tests.py
+
+## Writting a processor
+
+See `assignmentconvert.py` for an example.

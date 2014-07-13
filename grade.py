@@ -1,23 +1,52 @@
-# Copyright (C) 2014 Karl R. Wurst
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 import argparse
+import logging
 import json
 import os
 import pathlib
 import logging
+
+
+class App(object):
+    def __init__(self):
+        self._arguments = CommandLineArguments()
+        self._init_logging()
+        self._assignment = Assignment(self._arguments.config)
+
+    def _init_logging(self):
+        if self._arguments.verbose:
+            logging.basicConfig(level='DEBUG')
+        elif self._arguments.brief:
+            logging.basicConfig(level='WARNING')
+        else:
+            logging.basicConfig(level='INFO')
+
+    def run(self):
+        self._assignment.accept(self.process_submissions)
+
+    def process_submissions(self, directory, files):
+        raise NotImplementedError('Must implement.')
+
+    def command(self, shell_string):
+        return Command(shell_string)
+
+
+class CommandLineArguments(object):
+    def __init__(self):
+        self._parser = argparse.ArgumentParser()
+        self._parser.add_argument('config', help='JSON configuration file')
+        self._parser.add_argument(
+            '-v', '--verbose',
+            help='increase output verbosity',
+            action='store_true',
+            default=False
+            )
+        self._parser.add_argument(
+            '-b', '--brief',
+            help='decrease output verbosity',
+            action='store_true',
+            default=False
+            )
+        self._parser.parse_args(namespace=self)
 
 
 class Assignment(object):
