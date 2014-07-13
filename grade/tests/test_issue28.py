@@ -23,8 +23,6 @@ class test_issue28(unittest.TestCase):
             Assignment(sandbox.dir('issue28.json')).accept(collector.visit)
             self.assertTrue(len(collector.get_lines()) == 5)
             output = out.getvalue().strip()
-            self.assertRegex(output, 'Not found: .*student2/file1.txt',
-                    msg=output)
         finally:
             self._restore_stdout()
 

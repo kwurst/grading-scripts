@@ -15,6 +15,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
 
 import argparse
+import logging
 import os
 from grade.engine import Assignment, Command
 
@@ -27,10 +28,22 @@ class LabConvert(object):
         parser.add_argument(
             '-v', '--verbose',
             help='increase output verbosity',
-            action='store_true'
+            action='store_true',
+            default=False
+            )
+        parser.add_argument(
+            '-b', '--brief',
+            help='decrease output verbosity',
+            action='store_true',
+            default=False
             )
         args = parser.parse_args()
-        Command.set_default_verbosity(args.verbose)
+        if args.verbose:
+            logging.basicConfig(level='DEBUG')
+        elif args.brief:
+            logging.basicConfig(level='WARNING')
+        else:
+            logging.basicConfig(level='INFO')
         self._a2pdf = Command(
             'a2pdf --noperl-syntax --noline-numbers "{ins}" -o "{ins}.pdf"')
         self._pdfcat = Command('pdftk "{ins}" cat output "{outs}"')

@@ -17,6 +17,7 @@ import argparse
 import json
 import os
 import pathlib
+import logging
 
 
 class Assignment(object):
@@ -24,9 +25,8 @@ class Assignment(object):
     directory.
     '''
 
-    def __init__(self, config_file, verbose=False, cd=True):
+    def __init__(self, config_file, cd=True):
         self._config_file = pathlib.Path(config_file).resolve()
-        self._verbose = verbose
         self._cd = cd
         self._config_dict = None
         self._submission_directories = []
@@ -86,12 +86,10 @@ class Assignment(object):
             self._notify_end_process_directory(directory)
 
     def _notify_start_process_directory(self, directory):
-        if self._verbose:
-            print('Processing', directory)
+        logging.info('Processing {directory}'.format(directory=directory))
 
     def _notify_end_process_directory(self, directory):
-        if self._verbose:
-            print('Done processing', directory)
+        logging.info('Done processing {directory}'.format(directory=directory))
 
     def _process_directory(self, visit, directory):
         self._enter_directory(directory)
@@ -119,7 +117,7 @@ class Assignment(object):
         try:
             resolved = self._resolve_path(path, root=root)
         except FileNotFoundError:
-            print('Not found: ' + str(root/path))
+            logging.warning('Not found: {path}'.format(path=str(root/path)))
         return resolved
 
 
@@ -146,15 +144,8 @@ class Command(object):
         concat2.each(['f1', 'f2])  # copies f1 to f1.2 and f2 to f2.2
         concat.each(['f1', 'f2'], ['f3', 'f4'])  # copies f1 to f3 and f2 to f4
     '''
-    _default_verbosity = False
 
-    @classmethod
-    def set_default_verbosity(cls, flag):
-        cls._default_verbosity = flag
-
-    def __init__(self, command_string, verbose=None):
-        self._verbose = \
-            verbose if verbose is not None else Command._default_verbosity
+    def __init__(self, command_string):
         self._command_string = command_string
 
     def __call__(self, ins=None, outs=None):
@@ -173,8 +164,7 @@ class Command(object):
         return args
 
     def _run_command(self, command):
-        if self._verbose:
-            print(command)
+        logging.debug(command)
         os.system(command)
 
     def each(self, ins=None, outs=None):
