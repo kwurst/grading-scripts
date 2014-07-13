@@ -16,8 +16,7 @@
 
 import argparse
 import os
-from grade.assignment import Assignment
-from grade.command import Command
+from grade.engine import Assignment, Command
 
 
 class LabConvert(object):

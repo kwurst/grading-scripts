@@ -4,8 +4,7 @@ import os
 from io import StringIO
 import sys
 import grade.tests.sandbox as sandbox
-from grade.assignment import Assignment
-from grade.command import Command
+from grade.engine import Assignment, Command
 
 
 OUTFILE = sandbox.dir('issue28.txt')
