@@ -85,8 +85,8 @@ class test_Command(unittest.TestCase):
         self.assertTrue(not self.file_.exists())
 
     def _get_parameterized_commands(self):
-        touch = Command('touch "{ins}"')
-        remove = Command('rm "{ins}"')
+        touch = Command('touch {ins}')
+        remove = Command('rm {ins}')
         return (touch, remove)
 
     def test_explicit_ins(self):
@@ -99,7 +99,7 @@ class test_Command(unittest.TestCase):
     def test_list_ins(self):
         touch, remove = self._get_parameterized_commands()
         touch(ins=[self.file_, self.filename+'2'])
-        self.assertTrue(self.file_.exists())
+        self.assertTrue(self.file_.exists(), msg="File: {}".format(self.file_))
         self.assertTrue(Path(self.filename+'2').exists())
         remove(ins=[self.file_, self.filename+'2'])
         self.assertTrue(not self.file_.exists())
@@ -108,22 +108,44 @@ class test_Command(unittest.TestCase):
     def test_explicit_outs(self):
         touch, remove = self._get_parameterized_commands()
         touch(self.file_)
-        copy = Command('cat "{ins}" > "{outs}"')
+        copy = Command('cat {ins} > {outs}')
         copy(self.file_, outs=self.filename+'2')
         self.assertTrue(Path(self.filename+'2').exists())
 
     def test_implicit_outs(self):
         touch, remove = self._get_parameterized_commands()
         touch(self.file_)
-        copy = Command('cat "{ins}" > "{outs}"')
+        copy = Command('cat {ins} > {outs}')
         copy(self.file_, self.filename+'2')
         self.assertTrue(Path(self.filename+'2').exists())
 
     def test_only_outs(self):
-        write_hi = Command('echo hi > "{outs}"')
+        write_hi = Command('echo hi > {outs}')
         write_hi(outs=self.file_)
         self.assertTrue(self.file_.exists())
 
+    def test_format_args_noneReturnsNone(self):
+        command = Command('')
+        self.assertIsNone(command._format_args(None))
+
+    def test_format_args_oneReturnsQuoted(self):
+        command = Command('')
+        result = command._format_args('hi')
+        self.assertEquals('"hi"', result)
+
+    def test_format_args_quotesEscaped(self):
+        command = Command('')
+        original = '"hi"'
+        expected = '"\\"hi\\""'
+        result = command._format_args(original)
+        self.assertEquals(expected, result)
+
+    def test_format_args_list(self):
+        command = Command('')
+        original = [ 'hi', 'mom', '"how"' ]
+        expected = '"hi" "mom" "\\"how\\""'
+        result = command._format_args(original)
+        self.assertEquals(expected, result)
 
 if __name__ == '__main__':
     unittest.main()

@@ -185,10 +185,12 @@ class Command(object):
 
     Examples creating a command:
 
-        concat = Command('cat "{ins}" > "{outs}"')
-        concat2 = Command('cat "{ins}" > "{ins}.2"')
+        concat = Command('cat {ins} > {outs}')
+        concat2 = Command('cat {ins} > {ins}.2')
 
-    IMPORTANT: Always encluse placeholders in double quotes.
+    {ins} and {outs} will be replaced by the parameters passed to the command
+    when called. These parameters will be quoted when substituted in. So, do not
+    quote.
 
     Example calls:
 
@@ -216,10 +218,15 @@ class Command(object):
         if args is None:
             return None
         if isinstance(args, list):
-            return '" "'.join([str(i) for i in args])
+            return ' '.join([self._format_args(arg) for arg in args])
         elif not isinstance(args, str):
-            return str(args)
-        return args
+            args_string =  str(args)
+        else:
+            args_string = args
+        args_string = args_string.replace('"', '\\"')
+        args_string =  '"' + args_string + '"'
+        return args_string
+
 
     def _run_command(self, command):
         logging.debug(command)

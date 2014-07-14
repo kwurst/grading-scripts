@@ -20,10 +20,10 @@ class LabConvert(SubmissionProcessor):
     def __init__(self):
         super().__init__(self)
         self._a2pdf = self.command(
-            'a2pdf --noperl-syntax --noline-numbers "{ins}" -o "{ins}.pdf"')
-        self._pdfcat = self.command('pdftk "{ins}" cat output "{outs}"')
+            'a2pdf --noperl-syntax --noline-numbers {ins} -o {ins}.pdf')
+        self._pdfcat = self.command('pdftk {ins} cat output {outs}')
         self._create_log = self.command('git log > log.txt')
-        self._rm = self.command('rm "{ins}"')
+        self._rm = self.command('rm {ins}')
 
     def process_submission(self, directory, files):
         self._create_log()
