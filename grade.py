@@ -18,7 +18,6 @@ import logging
 import json
 import os
 import pathlib
-import logging
 
 
 class App(object):
