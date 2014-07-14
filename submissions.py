@@ -20,8 +20,17 @@ import os
 import pathlib
 
 
-class App(object):
+class Processor(object):
+    '''
+    Base class for submission processors. To use:
+        1) Inherit.
+        2) Call super constructor.
+        3) Optionally set self.cd = False to prevent changing into each
+        submission directory before calling process_submissions.
+        4) Implement process_submission.
+    '''
     def __init__(self):
+        self.cd = True
         self._arguments = CommandLineArguments()
         self._init_logging()
         self._assignment = Assignment(self._arguments.config)
@@ -35,12 +44,21 @@ class App(object):
             logging.basicConfig(level='INFO')
 
     def run(self):
-        self._assignment.accept(self.process_submissions)
+        self._assignment.accept(self.process_submission, self.cd)
 
-    def process_submissions(self, directory, files):
+    def process_submission(self, directory, files):
+        '''
+        Called once for each submission directory. `directory` is a
+        `pathlib.Path` to the submission directory. `files` is a possibly empy
+        list of `pathlib.Path`s to files in `directory` to process.  The paths
+        in `files` have been resolved against directory. All `files` exist.
+        '''
         raise NotImplementedError('Must implement.')
 
     def command(self, shell_string):
+        '''
+        Returns a `Command` for the given `shell_string`.
+        '''
         return Command(shell_string)
 
 
@@ -64,9 +82,6 @@ class CommandLineArguments(object):
 
 
 class Assignment(object):
-    '''Provides traversal and path resolution for visitors over an assignment
-    directory.
-    '''
 
     def __init__(self, config_file, cd=True):
         self._config_file = pathlib.Path(config_file).resolve()

@@ -19,7 +19,7 @@ import os
 from io import StringIO
 import sys
 import tests.sandbox as sandbox
-from grade import Assignment, Command
+from submissions import Assignment, Command
 
 
 OUTFILE = sandbox.dir('issue28.txt')

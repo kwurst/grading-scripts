@@ -16,7 +16,7 @@
 import unittest
 import os.path
 import tests.sandbox as sandbox
-from grade import Assignment, Command
+from submissions import Assignment, Command
 from pathlib import Path
 
 
