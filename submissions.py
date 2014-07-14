@@ -20,7 +20,7 @@ import os
 import pathlib
 
 
-class Processor(object):
+class SubmissionProcessor(object):
     '''
     Base class for submission processors. To use:
         1) Inherit.
